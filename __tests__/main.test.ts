@@ -1,7 +1,7 @@
 /**
  * Unit tests for the action's main functionality, src/main.ts
  */
-import { jest } from '@jest/globals'
+import { afterEach, describe, expect, it, jest } from '@jest/globals'
 import * as core from '../__fixtures__/core.js'
 
 // Mocks should be declared before the module being tested is imported.
@@ -17,7 +17,7 @@ describe('main.ts', () => {
   })
 
   it('Says hello with the CI result', async () => {
-    core.getInput.mockReturnValue('success')
+    core.setInputs({ 'ci-result': 'success' })
 
     await run()
 
