@@ -2,9 +2,9 @@
  * Unit tests for the bot's configuration reader, src/config.ts
  */
 import { describe, it, afterEach, expect, jest } from '@jest/globals'
-import * as core from '../__fixtures__/core.js'
+import * as core from '../__fixtures__/core.ts'
 
-jest.mock('@actions/core')
+jest.unstable_mockModule('@actions/core', () => core)
 
 const { parseConfig } = await import('../src/config.js')
 
@@ -87,7 +87,7 @@ describe('config.ts', () => {
     expect(() => parseConfig()).toThrow(/Invalid input for 'explain-failure'/)
   })
 
-  it('throws an error when max-comments input is invalid', () => {
+  it('throws an error when max-comments input is a string', () => {
     core.getInput.mockImplementation((name: string) => {
       if (name === 'max-comments') return 'abc'
       return ''
@@ -96,9 +96,36 @@ describe('config.ts', () => {
     expect(() => parseConfig()).toThrow(/Invalid input for 'max-comments'/)
   })
 
-  it('throws an error when min-confidence input is invalid', () => {
+  it('throws an error when max-comments input is less than 0', () => {
+    core.getInput.mockImplementation((name: string) => {
+      if (name === 'max-comments') return '-1'
+      return ''
+    })
+
+    expect(() => parseConfig()).toThrow(/Invalid input for 'max-comments'/)
+  })
+
+  it('throws an error when min-confidence input is a string', () => {
     core.getInput.mockImplementation((name: string) => {
       if (name === 'min-confidence') return 'abc'
+      return ''
+    })
+
+    expect(() => parseConfig()).toThrow(/Invalid input for 'min-confidence'/)
+  })
+
+  it('throws an error when min-confidence input is less than 0', () => {
+    core.getInput.mockImplementation((name: string) => {
+      if (name === 'min-confidence') return '-0.01'
+      return ''
+    })
+
+    expect(() => parseConfig()).toThrow(/Invalid input for 'min-confidence'/)
+  })
+
+  it('throws an error when min-confidence input is larger than 1', () => {
+    core.getInput.mockImplementation((name: string) => {
+      if (name === 'min-confidence') return '1.01'
       return ''
     })
 

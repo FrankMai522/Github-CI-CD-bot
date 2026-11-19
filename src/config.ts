@@ -40,8 +40,8 @@ export function parseConfig(): ActionConfig {
   const explainFailure = explainFailureStr === 'true'
 
   const maxCommentsStr = core.getInput('max-comments') || '5'
-  const maxComments = parseInt(maxCommentsStr, 10)
-  if (isNaN(maxComments)) {
+  const maxComments = Number(maxCommentsStr)
+  if (!Number.isInteger(maxComments) || maxComments < 0) {
     throw new Error(
       `Invalid input for 'max-comments': "${maxCommentsStr}". Must be a valid integer.`
     )
@@ -49,9 +49,9 @@ export function parseConfig(): ActionConfig {
 
   const minConfidenceStr = core.getInput('min-confidence') || '0.6'
   const minConfidence = parseFloat(minConfidenceStr)
-  if (isNaN(minConfidence)) {
+  if (isNaN(minConfidence) || minConfidence < 0 || minConfidence > 1) {
     throw new Error(
-      `Invalid input for 'min-confidence': "${minConfidenceStr}". Must be a valid integer.`
+      `Invalid input for 'min-confidence': "${minConfidenceStr}". Must be a number between 0 and 1.`
     )
   }
 
