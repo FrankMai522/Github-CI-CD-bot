@@ -2,10 +2,6 @@
  * Unit tests for the diff parser functionality, src/github/diff.ts
  */
 import { afterEach, describe, expect, it, jest } from '@jest/globals'
-import * as core from '../__fixtures__/core.ts'
-
-// Mocks should be declared before the module being tested is imported.
-jest.unstable_mockModule('@actions/core', () => core)
 
 // Import the module being tested dynamically to ensure mocks apply properly.
 const { isLineInDiff, annotatePatch } = await import('../src/github/diff.ts')
@@ -133,8 +129,8 @@ describe('diff.ts', () => {
     )
   })
 
-  it('handles a renamed file patch', () => {
-    const patch = '@@ -1,2 +1,2 @@\n' + '-const x = 1;\n' + '+const x = 2;\n'
+  it('handles a line replacement', () => {
+    const patch = '@@ -1,1 +1,1 @@\n' + '-const x = 1;\n' + '+const x = 2;\n'
 
     const mockFile = { filename: 'src/renamed.ts', patch }
     expect(isLineInDiff(mockFile, 1)).toBe(true)
