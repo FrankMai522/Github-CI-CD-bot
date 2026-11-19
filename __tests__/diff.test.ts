@@ -138,7 +138,7 @@ describe('diff.ts', () => {
 
     const annotated = annotatePatch(patch)
     expect(annotated).toBe(
-      '@@ -1,2 +1,2 @@\n' + ' | -const x = 1;\n' + '1 | +const x = 2;'
+      '@@ -1,1 +1,1 @@\n' + ' | -const x = 1;\n' + '1 | +const x = 2;'
     )
   })
 
