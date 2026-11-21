@@ -12,7 +12,11 @@ type Case = {
 const cases: Case[] = [
   { file: 'build_error.log', category: 'build', mustKeep: 'error TS2307' },
   // eslint-disable-next-line prettier/prettier
-  { file: 'build2_error.log', category: 'test', mustKeep: '1 failed, 28 passed' },
+  {
+    file: 'build2_error.log',
+    category: 'test',
+    mustKeep: '1 failed, 28 passed'
+  },
   // eslint-disable-next-line prettier/prettier
   { file: 'dependency_error.log', category: 'build', mustKeep: 'error TS2307' },
   {
