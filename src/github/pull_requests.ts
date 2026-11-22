@@ -1,8 +1,8 @@
-import { Octokit } from '@octokit/rest'
+import type { getOctokit } from '@actions/github'
 import { annotatePatch } from './diff.js'
 
 export interface FetchPRParams {
-  octokit: Octokit
+  octokit: ReturnType<typeof getOctokit>
   owner: string
   repo: string
   pullNumber: number
