@@ -1,7 +1,7 @@
 import { describe, expect, it } from '@jest/globals'
 import { createFakeOctokit } from '../__fixtures__/octokit.ts'
 import { fetchPR } from '../src/github/pull_requests.ts'
-import { Octokit } from '@octokit/rest'
+import type { Octokit } from '@octokit/rest'
 
 type GetPullRequest = ReturnType<
   typeof createFakeOctokit
