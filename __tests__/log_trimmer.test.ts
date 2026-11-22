@@ -11,21 +11,21 @@ type Case = {
 // One row per fixture log. Fill in the FILL_ME values yourself.
 const cases: Case[] = [
   { file: 'build_error.log', category: 'build', mustKeep: 'error TS2307' },
-  // eslint-disable-next-line prettier/prettier
+
   {
     file: 'build2_error.log',
     category: 'test',
     mustKeep: '1 failed, 28 passed'
   },
-  // eslint-disable-next-line prettier/prettier
-  { file: 'dependency_error.log', category: 'build', mustKeep: 'error TS2307' },
+
+  { file: 'dependency_error.log', category: 'dependency', mustKeep: 'E404' },
   {
     file: 'lint_parsing_error.log',
     category: 'lint',
     mustKeep: 'Parsing error'
   },
-  // NOTE: really a test failure; marked build because the trimmer picks the first failure
-  { file: 'test_error.log', category: 'build', mustKeep: 'error TS2694' }
+
+  { file: 'test_error.log', category: 'test', mustKeep: 'error TS2694' }
 ]
 
 const load = (name: string) =>

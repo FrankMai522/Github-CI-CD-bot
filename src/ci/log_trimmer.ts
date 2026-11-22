@@ -34,6 +34,7 @@ const ERROR_LINE_RES: RegExp[] = [
   /^\s*\d+:\d+\s+error\b/, // eslint: "  3:1  error  message  rule-name"
   /✖ \d+ problems?/, // eslint summary line
   /\bfailed\b/i,
+  /npm error/,
   /timed out|ETIMEDOUT/i
 ]
 
@@ -49,13 +50,13 @@ const CATEGORY_RULES: [FailureCategory, RegExp][] = [
   ],
   [
     'dependency',
-    /(npm ERR!|ERESOLVE|E404|ENOTFOUND|Cannot find module|Could not resolve dependency|yarn install|pnpm install|peer dep)/i
+    /(npm error|npm ERR!|ERESOLVE|E404|ENOTFOUND|Cannot find module|Could not resolve dependency|yarn install|pnpm install|peer dep)/i
   ],
   ['lint', /(eslint|prettier|✖ \d+ problems?|\d+ errors?, \d+ warnings?)/i],
 
   [
     'test',
-    /(\bFAIL\b|Tests?:\s+\d+ failed|AssertionError|expect\(|✕|\d+ failing)/
+    /(\bFAIL\b|[Tt]ests? failed|Tests?:\s+\d+ failed|AssertionError|expect\(|✕|\d+ failing)/
   ]
 ]
 
@@ -68,8 +69,12 @@ export function stripNoise(log: string): string {
 }
 
 export function categorize(text: string): FailureCategory {
-  for (const [category, re] of CATEGORY_RULES) {
-    if (re.test(text)) return category
+  const lines = text.split('\n')
+  // Walk from the bottom up: the last line that matches a rule decides.
+  for (let i = lines.length - 1; i >= 0; i--) {
+    for (const [category, re] of CATEGORY_RULES) {
+      if (re.test(lines[i])) return category
+    }
   }
   return 'unknown'
 }
