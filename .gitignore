@@ -101,3 +101,6 @@ __tests__/runner/*
 .idea
 *.code-workspace
 dist/
+
+!__fixtures__/logs/
+!__fixtures__/logs/*.log
