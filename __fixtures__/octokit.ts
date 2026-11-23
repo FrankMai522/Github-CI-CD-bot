@@ -1,12 +1,12 @@
 import type { getOctokit } from '@actions/github'
 import { jest } from '@jest/globals'
 
-type Octokit = ReturnType<typeof getOctokit>
+export type Octokit = ReturnType<typeof getOctokit>
 type ListComments = Octokit['rest']['issues']['listComments']
 type CreateComment = Octokit['rest']['issues']['createComment']
 type UpdateComment = Octokit['rest']['issues']['updateComment']
-type GetPullRequest = Octokit['rest']['pulls']['get']
-type ListFiles = Octokit['rest']['pulls']['listFiles']
+export type GetPullRequest = Octokit['rest']['pulls']['get']
+export type ListFiles = Octokit['rest']['pulls']['listFiles']
 type ListJobs = Octokit['rest']['actions']['listJobsForWorkflowRun']
 
 // Let tests supply the combined results for listFiles or listComments.

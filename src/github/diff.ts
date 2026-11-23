@@ -43,7 +43,10 @@ export function isLineInDiff(file: DiffFile, lineNumber: number): boolean {
  * Annotates a patch by prepending new-file line numbers in front of each line
  * so an LLM can accurately cite them.
  */
-export function annotatePatch(patch: string): string {
+export function annotatePatch(patch?: string): string | undefined {
+  if (!patch) {
+    return undefined
+  }
   const lines = patch.replace(/\n$/, '').split('\n')
   const annotatedLines: string[] = []
 
