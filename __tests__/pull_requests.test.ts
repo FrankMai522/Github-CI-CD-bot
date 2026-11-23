@@ -1,15 +1,12 @@
 import { describe, expect, it } from '@jest/globals'
-import { createFakeOctokit } from '../__fixtures__/octokit.ts'
+import {
+  Octokit,
+  GetPullRequest,
+  ListFiles,
+  createFakeOctokit
+} from '../__fixtures__/octokit.ts'
 import { fetchPR } from '../src/github/pull_requests.ts'
-import type { getOctokit } from '@actions/github'
 
-type Octokit = ReturnType<typeof getOctokit>
-type GetPullRequest = ReturnType<
-  typeof createFakeOctokit
->['rest']['pulls']['get']
-type ListFiles = ReturnType<
-  typeof createFakeOctokit
->['rest']['pulls']['listFiles']
 type PullResponse = Awaited<ReturnType<GetPullRequest>>
 type FilesResponse = Awaited<ReturnType<ListFiles>>
 type FileItem = FilesResponse['data'][number]
